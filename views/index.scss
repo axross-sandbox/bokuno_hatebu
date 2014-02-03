@@ -1,0 +1,183 @@
+@mixin clearfix {
+  &:after {
+    content: " ";
+    display: block;
+    clear: both;
+    height: 0;
+    visibility: hidden;
+  }
+}
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+html, body {
+  position: relative;
+  min-width: 640px;
+  height: 100%;
+  background-image: url(./ricepaper-3.png);
+  font-family:'Lucida Grande','Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+}
+.header {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  min-width: 640px;
+  height: 92px;
+  z-index: 99;
+  background-color: #007ab7;
+  box-shadow: rgba(0, 0, 0, .2) 0px 2px 4px;
+  color: #efefef;
+  text-shadow: rgba(0, 0, 0, .5) 1px 1px 1px;
+  .title {
+    height: 40px;
+    margin: 8px 0 8px;
+    padding-left: 16px;
+    text-shadow: rgba(0, 0, 0, .5) 2px 2px 2px;
+    font-size: 24px;
+    line-height: 40px;
+    span {
+      font-size: 12px;
+    }
+  }
+  .menu {
+    margin-left: -8px;
+    text-align: center;
+    .item {
+      display: inline-block;
+      height: 28px;
+      margin-left: 8px;
+      padding: 0 8px;
+      background-color: rgba(0, 0, 0, .1);
+      border-radius: 3px;
+      color: #efefef;
+      font-size: 14px;
+      line-height: 28px;
+      text-decoration: none;
+      &:hover {
+        background-color: rgba(255, 255, 255, .1);
+      }
+    }
+    .first {
+      border: none;
+    }
+  }
+  .author {
+    display: inline-block;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    height: 32px;
+    padding: 0 8px;
+    background-color: rgba(0, 0, 0, .1);
+    border-radius: 3px;
+    color: #efefef;
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 32px;
+    &:hover {
+      background-color: rgba(255, 255, 255, .1);
+    }
+    .img {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      margin: 0 4px;
+      background-image: url(./axross.png);
+      background-repeat: no-repeat;
+      background-size: cover;
+      border: #bfbfbf 1px solid;
+      border-radius: 3px;
+      vertical-align: -8px;
+    }
+  }
+}
+.entries {
+  width: 640px;
+  margin: 0 auto;
+  padding: 92px 8px 8px 8px;
+  .entry {
+    @include clearfix;
+    display: block;
+    position: relative;
+    height: 98px; /* 96 + 1 + 1 */
+    margin-top: 8px;
+    background-color: rgba(255, 255, 255, .75);
+    border: rgba(0, 0, 0, .2) 1px solid;
+    border-radius: 4px;
+    text-decoration: none;
+    &:hover {
+      background-color: #f7f7f7;
+    }
+    &:active {
+      margin: 9px -1px -1px 1px;
+    }
+    .thumbnail {
+      position: absolute;
+      width: 128px;
+      height: 96px;
+      left: 0px;
+      top: 0px;
+      background-color: rgba(0, 0, 0, .1);
+      background-position: center center;
+      background-size: cover;
+      border-radius: 4px;
+    }
+    .title {
+      display: block;
+      position: absolute;
+      left: 136px;
+      right: 8px;
+      top: 8px;
+      padding-left: 22px;
+      background-repeat: no-repeat;
+      background-position: left center;
+      color: #3f3f3f;
+      font-size: 16px;
+      line-height: 24px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .description {
+      display: block;
+      position: absolute;
+      left: 136px;
+      right: 8px;
+      top: 40px;
+      bottom: 8px;
+      padding-left: 8px;
+      border-left: #bfbfbf 4px solid;
+      overflow: hidden;
+      color: #9f9f9f;
+      font-size: 12px;
+      line-height: 16px;
+    }
+    .created {
+      display: inline-block;
+      position: absolute;
+      right: 500px;
+      bottom: 5px;
+      padding: 2px 4px;
+      z-index: 2;
+      background-color: rgba(0, 0, 0, .5);
+      border-radius: 2px;
+      color: #fff;
+      font-size: 10px;
+    }
+    .users {
+      display: inline-block;
+      position: absolute;
+      right: 8px;
+      bottom: 5px;
+      z-index: 2;
+      /*border: rgba(0, 0, 0, .2) 1px solid;
+      border-radius: 2px;*/
+      color: #ca3c6e;
+      font-size: 10px;
+    }
+  }
+}
+
+

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>僕のはてブ【Web技術版】</title>
+  <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+  <div class="header">
+    <div class="title">僕のはてブ<span>【Web技術版】</span></div>
+    <div class="menu">
+      <a href="./" class="item first">総合</a><% RESERVED_TAGS.each do |t| %><a href="./<%= t[:url] %>" class="item"><%= t[:name] %></a><% end %>
+    </div>
+    <a class="author" href="http://blog.axross.org" target="_blank">created by<span class="img"></span>axross</a>
+  </div>
+
+  <div class="entries">
+  <% @entries.each do |e| %>
+    <a class="entry" href="<%= e['url'] %>" target="_blank">
+      <h3 class="title" style="background-image: url(<%= h e['icon'] %>);"><%= e['title'] %></h3>
+      <div class="thumbnail" style="background-image: url(<%= e['thumbnail'] %>);"></div>
+      <div class="description"><%= h e['description'][0, 108] %>...</div>
+      <div class="users">★<%= e['users'] %></div>
+      <div class="created"><%= tiny_time(e['created']) %></div>
+    </a>
+  <% end %>
+  </div>
+
+<%= @sql %>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>僕のはてブ【Web技術版】</title>
+  <meta name="viewport" content="width=320px, user-scalable=no">
+  <link rel="stylesheet" href="./index_s.css">
+</head>
+<body>
+  <div class="header">
+    <div class="title">僕のはてブ<span>【Web技術版】</span></div>
+    <select id="change_tag" class="menu">
+      <option value="">総合</option>
+      <% RESERVED_TAGS.each do |t| %>
+      <option value="<%= t[:url] %>"<% if @tag == t[:url] %> selected<% end %>><%= t[:name] %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <div class="entries">
+  <% @entries.each do |e| %>
+    <a class="entry" href="<%= e['url'] %>" target="_blank">
+      <h3 class="title" style="background-image: url(<%= h e['icon'] %>);"><%= e['title'][0, 28] %><% if e['title'].length > 28 then %>...<% end %></h3>
+      <div class="thumbnail" style="background-image: url(<%= e['thumbnail'] %>);"></div>
+      <div class="users">★<%= e['users'] %></div>
+      <div class="created"><%= tiny_time(e['created']) %></div>
+    </a>
+  <% end %>
+  </div>
+
+  <div class="author">created by<a href="http://blog.axross.org" target="_blank"><span class="img"></span>axross</a></div>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script src="./index_s.js"></script>
+</body>
+</html>

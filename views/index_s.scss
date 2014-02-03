@@ -1,0 +1,162 @@
+@mixin clearfix {
+  &:after {
+    content: " ";
+    display: block;
+    clear: both;
+    height: 0;
+    visibility: hidden;
+  }
+}
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+html, body {
+  position: relative;
+  width: 320px;
+  height: 100%;
+  background-image: url(./ricepaper-1.png);
+  font-family:'Lucida Grande','Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+.header {
+  position: absolute;
+  width: 320px;
+  top: 0px;
+  left: 0px;
+  height: 96px;
+  padding: 0 8px;
+  z-index: 99;
+  background-color: #007ab7;
+  box-shadow: rgba(0, 0, 0, .2) 0px 2px 4px;
+  color: #efefef;
+  text-shadow: rgba(0, 0, 0, .5) 1px 1px 1px;
+  .title {
+    height: 36px;
+    margin: 8px 0 4px;
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, .5) 2px 2px 2px;
+    font-size: 24px;
+    line-height: 36px;
+    span {
+      font-size: 12px;
+    }
+  }
+  .menu {
+    width: 100%;
+    height: 32px;
+    margin: 8px 0;
+    font-size: 14px;
+    line-height: 28px;
+    text-align: center;
+  }
+}
+.entries {
+  width: 320px;
+  margin: 0 auto;
+  padding: 96px 8px 8px 8px;
+  .entry {
+    @include clearfix;
+    display: block;
+    position: relative;
+    height: 98px; /* 96 + 1 + 1 */
+    margin-top: 8px;
+    background-color: rgba(255, 255, 255, .75);
+    border: rgba(0, 0, 0, .2) 1px solid;
+    border-radius: 4px;
+    text-decoration: none;
+    &:hover {
+      background-color: #f7f7f7;
+    }
+    &:active {
+      margin: 9px -1px -1px 1px;
+    }
+    .thumbnail {
+      position: absolute;
+      width: 96px;
+      height: 96px;
+      left: 0px;
+      top: 0px;
+      background-color: rgba(0, 0, 0, .1);
+      background-position: center center;
+      background-size: cover;
+      border-radius: 4px;
+    }
+    .title {
+      display: block;
+      position: absolute;
+      left: 104px;
+      right: 8px;
+      top: 8px;
+      padding-left: 22px;
+      background-repeat: no-repeat;
+      background-position: left 4px;
+      color: #3f3f3f;
+      font-size: 16px;
+      line-height: 24px;
+      word-break: break-all;
+    }
+    .description {
+      display: block;
+      position: absolute;
+      left: 104px;
+      right: 8px;
+      top: 40px;
+      bottom: 8px;
+      padding-left: 8px;
+      border-left: #bfbfbf 4px solid;
+      overflow: hidden;
+      color: #9f9f9f;
+      font-size: 12px;
+      line-height: 16px;
+    }
+    .created {
+      display: inline-block;
+      position: absolute;
+      right: 212px;
+      bottom: 5px;
+      padding: 2px 4px;
+      z-index: 2;
+      background-color: rgba(0, 0, 0, .5);
+      border-radius: 2px;
+      color: #fff;
+      font-size: 10px;
+    }
+    .users {
+      display: inline-block;
+      position: absolute;
+      right: 8px;
+      bottom: 5px;
+      z-index: 2;
+      /*border: rgba(0, 0, 0, .2) 1px solid;
+      border-radius: 2px;*/
+      color: #ca3c6e;
+      font-size: 10px;
+    }
+  }
+}
+.author {
+  height: 40px;
+  margin: 0 auto;
+  padding-bottom: 8px;
+  color: #1f1f1f;
+  font-size: 14px;
+  line-height: 32px;
+  text-align: center;
+  a {
+    color: #007ab7;
+  }
+  .img {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin: 0 4px;
+    background-image: url(./axross.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: #007ab7 1px solid;
+    border-radius: 3px;
+    vertical-align: -8px;
+  }
+}
+
