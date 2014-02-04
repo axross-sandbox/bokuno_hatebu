@@ -152,4 +152,7 @@ task 'crawl', 'num' do |t, args|
 end
 
 desc 'データベースの初期化を行った後、200件ずつクロールします'
-task both: [:init, :crawl[num: 200]]
+task :both do
+  Rake::Task[:init].execute
+  Rake::Task[:crawl].execute num: 200
+end
