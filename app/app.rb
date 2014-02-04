@@ -1,20 +1,16 @@
 require 'sinatra'
 require 'sass'
 require 'sqlite3'
-require './model'
-require './setting'
 
-get '/index.css' do
-  scss :index
-end
+# ヘルパーメソッド
+require './app/helpers.rb'
 
-get '/index_s.css' do
-  scss :index_s
-end
+# 設定
+require './app/settings.rb'
 
-get '/favicon.ico' do
-  # 未定
-end
+get('/index.css') { scss :index }
+get('/index_s.css') { scss :index_s }
+get('/favicon.ico') {  }
 
 # トップページ
 get '/' do
@@ -32,6 +28,7 @@ get '/' do
   end
 end
 
+# タグ
 get '/:tag' do |tag|
   tags = [tag, tag]
   populity = 1

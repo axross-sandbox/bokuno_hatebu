@@ -1,7 +1,3 @@
-## 書き方
-# task <タスク名> , [<パラメータ名>, <パラメータ名> ... ] => [<前提タスク名>,<前提タスク名> ... ] do
-#    # アクション
-# end
 def sqlite
   db = SQLite3::Database.new 'database.sqlite3'
   db.results_as_hash = true
@@ -9,9 +5,9 @@ def sqlite
   db.close
 end
 
-task default: :init
+task default: :both
 
-# 初期化
+desc 'データベースファイルを生成/初期化します'
 task :init do
   require 'sqlite3'
   dbname = 'database.sqlite3'
@@ -39,7 +35,6 @@ task :init do
 
   begin
     db = SQLite3::Database.new 'database.sqlite3'
-    db.results_as_hash = true
     db.execute sql
     db.close
   rescue
@@ -50,6 +45,7 @@ task :init do
   end
 end
 
+desc 'データベースファイルを削除します'
 task :destroy do
   dbname = 'database.sqlite3'
 
@@ -59,6 +55,7 @@ task :destroy do
   end
 end
 
+desc '指定した件数ずつ、各カテゴリをクロールします'
 task 'crawl', 'num' do |t, args|
   require 'nokogiri'
   require 'open-uri'
@@ -111,37 +108,38 @@ task 'crawl', 'num' do |t, args|
             end
             entry[:tags] = _tags.join('/')
 
-            sqlite do |db|
-              _exist = false
-              db.execute(
-                'SELECT COUNT(id) AS count FROM entries WHERE id = ?;',
-                [entry[:id].to_i]
-              ) do |row|
-                _exist = true if row['count'] > 0
-              end
-
-              if _exist
-                db.execute(
-                  'UPDATE entries SET users = ?, tags = ? WHERE id = ?;',
-                  [entry[:users], entry[:tags], entry[:id].to_i]
-                )
-
-                count += 1
-                count_updated += 1
-                count_per_catagories += 1
-                puts ">> #{count}[upd] #{entry[:title][0, 32]}..."
-              else
-                db.execute(
-                  'INSERT INTO entries(id, title, url, thumbnail, icon, users, description, tags, created) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);',
-                  [entry[:id].to_i, entry[:title], entry[:url], entry[:thumbnail], entry[:icon], entry[:users], entry[:description], entry[:tags], entry[:created].to_i]
-                )
-
-                count += 1
-                count_new += 1
-                count_per_catagories += 1
-                puts ">> #{count}[new] #{entry[:title][0,32]}..."
-              end
+            db = SQLite3::Database.new 'database.sqlite3'
+            db.results_as_hash = true
+            _exist = false
+            db.execute(
+              'SELECT COUNT(id) AS count FROM entries WHERE id = ?;',
+              [entry[:id].to_i]
+            ) do |row|
+              _exist = true if row['count'] > 0
             end
+
+            if _exist
+              db.execute(
+                'UPDATE entries SET users = ?, tags = ? WHERE id = ?;',
+                [entry[:users], entry[:tags], entry[:id].to_i]
+              )
+
+              count += 1
+              count_updated += 1
+              count_per_catagories += 1
+              puts ">> #{count}[upd] #{entry[:title][0, 32]}..."
+            else
+              db.execute(
+                'INSERT INTO entries(id, title, url, thumbnail, icon, users, description, tags, created) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);',
+                [entry[:id].to_i, entry[:title], entry[:url], entry[:thumbnail], entry[:icon], entry[:users], entry[:description], entry[:tags], entry[:created].to_i]
+              )
+
+              count += 1
+              count_new += 1
+              count_per_catagories += 1
+              puts ">> #{count}[new] #{entry[:title][0,32]}..."
+            end
+            db.close
           end
         end
       end
@@ -152,3 +150,6 @@ task 'crawl', 'num' do |t, args|
   puts "#{count_updated} entries updated."
   puts "#{count_new} new entries added."
 end
+
+desc 'データベースの初期化を行った後、200件ずつクロールします'
+task both: [:init, :crawl[num: 200]]
